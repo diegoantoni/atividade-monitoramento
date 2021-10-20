@@ -9,7 +9,7 @@ pipeline{
         stage('Build da imagem'){
             agent { node 'master' }
             steps {
-                git url: 'https://github.com/WebGoat/WebGoat/tree/develop/docker'
+                git url: 'https://github.com/WebGoat/WebGoat/tree/develop/docker/'
                 script {
                     docker.build "$NAME_APP:latest"
                 }
