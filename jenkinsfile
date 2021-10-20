@@ -7,6 +7,7 @@ pipeline{
     
     stages {
         stage('Build da imagem'){
+            agent { node 'master' }
             steps {
                 git url: 'https://github.com/WebGoat/WebGoat/tree/develop/docker'
                 script {
@@ -14,17 +15,32 @@ pipeline{
                 }
             }
         }
-       
-  
+
+        stage('Clone do Codigo'){
+            steps{
+                git url: 'https://github.com/WebGoat/WebGoat'
+            }
+        }
+        
         stage('Executando Container'){
+            agent { node 'master' }
             steps {
                 sh '''
                     if [ ! "$(curl -s localhost:$PORT_APP &> /dev/null)" ]; then
-                    docker run -d --name $NAME_APP -p $PORT_APP:3333 -p 8880:8880 -p 9090:9090 -e TZ=America/Sao_Paulo $NAME_APP:latest
+                    docker run -d --name $NAME_APP -p $PORT_APP:3333 $NAME_APP:latest
                     fi
                 '''
             } 
         }
-    } 
 
+    }
+
+    post {
+        success {
+            echo "Pipeline executado com sucesso!!"
+        }
+        failure {
+            echo "Pipeline falhou!"
+        }
+    }
 }
