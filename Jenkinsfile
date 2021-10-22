@@ -13,7 +13,7 @@ pipeline{
             steps {
                 git url: 'https://github.com/diegoantoni/conversao-temperatura'
                 script {
-                    dir($DIR_APP){
+                    dir("$DIR_APP"){
                         docker.build "$NAME_APP:latest"
                     }
                     
