@@ -4,7 +4,7 @@ pipeline{
     environment {
         NAME_APP = "api-conversao"
         PORT_APP = "8585"
-        DIR_APP = "/home/jenkins/workspace/pipeline-api-conversao/src/"
+        DIR_APP = "/home/jenkins/workspace/pipeline-api/src/"
     }
     
     stages {
